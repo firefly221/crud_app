@@ -42,6 +42,11 @@
     </tbody>
     </table>
 
+    <div class="container">
+        <p>
+            <a class="btn btn-success btn-lg" href="create.php">Add a new painting</a>    
+        </p>
+    </div>
     
 </body>
 </html>

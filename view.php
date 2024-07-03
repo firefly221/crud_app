@@ -1,7 +1,7 @@
 <?php 
     require 'user.php';
 
-    
+
 
     if(isset($_GET['id']))
     {
@@ -34,7 +34,7 @@
     <div class="container text-center border border-0">
         <h2>You are viewing <?= $user_data['title'] ?></h2>
         <h3>It's currently in <?= $user_data['museum'] ?></h3>
-        <img src="images/<?= $user_data['photo_url'] ?>" class="img-fluid" width="400px">
+        <img src="images/<?= $user_data['id'] ?>.jpg"  class="img-fluid" width="400px">
     </div>
     
 </body>

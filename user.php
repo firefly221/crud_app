@@ -38,18 +38,30 @@ function deleteUserById($id)
 function updateUserById($id,$data)
 {
     $users_all = getUsers();
+    if(in_array($id,$users_all) == false)
+    {
+        $users_all[$id]['id'] = $id;
+    }
     foreach($users_all as $i => $user)
     {
         if($user['id'] == $id)
         {
             $users_all[$i]['title'] = $data['title'];
             $users_all[$i]['museum'] = $data['museum'];
-            $users_all[$i]['photo_url'] = $data['photo_url'];
         }
     }
 
-    file_put_contents('users.json',json_encode($users_all));
+    file_put_contents('users.json',json_encode($users_all,JSON_PRETTY_PRINT));
 
+}
+
+function addUser($newUser)
+{
+    $newUser['id'] = rand(100000,200000);
+    
+    updateUserById($newUser['id'],$newUser);
+
+    return $newUser;
 }
 
 
