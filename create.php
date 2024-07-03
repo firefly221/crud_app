@@ -1,9 +1,29 @@
 <?php 
 
+    $errors = [];
+    $isValid = true;
+    $title = '';
+    $museum = '';
     require 'user.php';
 
-    if(isset($_POST['title']) && isset($_POST['museum']) 
-        && isset($_FILES['photo']))
+    if($_SERVER['REQUEST_METHOD'] == 'POST')
+     {
+        $title = $_POST['title'];
+        $museum = $_POST['museum'];
+
+        if(strlen($title) < 6 || strlen($title) > 30)
+        {
+          $errors['title'] = "Title must be between 6 and 30 characters\n";
+          $isValid = false;
+        }
+        if(strlen($museum) < 6 || strlen($museum) > 30)
+        {
+          $errors['museum'] = "Museum name must be between 6 and 30 characters\n";
+          $isValid = false;
+        }
+
+
+    if($isValid)
     {   
       
         $user['id'] = 0;
@@ -27,7 +47,7 @@
 
     }
 
-
+  }
 
 
 ?>
@@ -48,15 +68,39 @@
     <form method="POST" action = "" enctype="multipart/form-data">
       <div class="mb-3"> 
         <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title" name="title">
+        <input type="text" value = "<?= $title ?>" class="form-control <?php 
+        if(isset($errors['title']))
+        {
+          echo 'is-invalid';
+        } 
+        ?>" id="title" name="title">
+        <div class="invalid-feedback">
+          <?= $errors['title'] ?>
+        </div>
       </div>  
       <div class="mb-3"> 
         <label for="museum" class="form-label">Current museum</label>
-        <input type="text" class="form-control" id="museum" name="museum">
+        <input  value="<?= $museum ?>" type="text" class="form-control <?php 
+        if(isset($errors['museum']))
+        {
+          echo 'is-invalid';
+        } 
+        ?>" id="museum" name="museum">
+        <div class="invalid-feedback">
+          <?= $errors['museum'] ?>
+        </div>
       </div> 
       <div class="mb-3"> 
         <label class="input-group-text" for="file">Upload</label>
-        <input type="file" class="form-control" id="file" name="photo">
+        <input type="file" class="form-control <?php 
+        if(isset($errors['file']))
+        {
+          echo 'is-invalid';
+        } 
+        ?>" id="file" name="photo">
+        <div class="invalid-feedback">
+          <?= $errors['file'] ?>
+        </div>
       </div>  
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
